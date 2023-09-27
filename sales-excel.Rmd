@@ -1,6 +1,6 @@
 ---
 title: "Sales"
-author: "Your Name"
+author: "Jiajun Zhang"
 output: html_document
 ---
 
@@ -16,7 +16,7 @@ knitr::include_graphics("images/sales-1.png")
 ```
 
 ```{r}
-
+sales <- read_excel("data-raw/sales.xlsx", range = "A5:B13", col_names = c("id", "n"))
 ```
 
 -   **Stretch goal:** Manipulate the sales data such such that it looks like the following.
@@ -26,5 +26,12 @@ knitr::include_graphics("images/sales-2.png")
 ```
 
 ```{r}
+sales %<>%
+mutate(brand_detect = as.numeric(id), brand = if_else(is.na(brand_detect), id, NA)) %>%
+fill(brand) %>%
+filter(!is.na(brand_detect)) %>%
+select(brand,id,n) %>%
+mutate(id = as.numeric(id),n = as.numeric(n))
 
+sales
 ```

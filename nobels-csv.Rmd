@@ -1,6 +1,6 @@
 ---
 title: "Nobel winners"
-author: "Your Name"
+author: "Jiajun Zhang"
 output: html_document
 ---
 
@@ -10,24 +10,26 @@ library(tidyverse)
 
 Let's first load the data:
 
-```{r label-me1, eval=FALSE}
-nobel <- ___(___)
+```{r load-data, eval=TRUE}
+nobel <- read_csv(file = "data-raw/nobel.csv")
+nobel
 ```
 
 Then let's split the data into two:
 
-```{r label-me2, eval=FALSE}
+```{r split-data, eval=TRUE}
 # stem laureates
-___ <- nobel %>%
-  filter(___)
-
+nobel_stem <- nobel %>%
+  filter(category %in% c("Physics", "Medicine", "Chemistry", "Economics"))
 # non-steam laureates
-___ <- nobel %>%
-  filter(___)
+nobel_nonstem <- nobel %>%
+  filter(!category %in% c("Physics", "Medicine", "Chemistry", "Economics"))
 ```
 
 And finally write out the data:
 
-```{r label-me3}
+```{r writeout, eval=TRUE}
 # add code for writing out the two data frames here
+write_csv(nobel_stem, file = "data/nobel-stem.csv")
+write_csv(nobel_nonstem, file = "data/nobel-nonstem.csv")
 ```
